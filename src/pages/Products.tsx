@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import {
   Container,
-  Grid,
+  Typography,
+  Paper,
+  Box,
+  Skeleton,
+  Button,
   Card,
   CardMedia,
   CardContent,
-  Typography,
   CardActions,
-  Button,
-  Box,
-  Skeleton,
-  Paper,
+  Grid as Grid2,
 } from "@mui/material";
 import { useCart } from "../context/CartContext";
 
@@ -112,9 +112,9 @@ const Products: React.FC = () => {
         >
           Nuestra Colección
         </Typography>
-        <Grid container spacing={4}>
+        <Grid2 container spacing={4}>
           {products.map((product) => (
-            <Grid item key={product.id} xs={12} sm={6} md={4}>
+            <Grid2 key={product.id} xs={12} sm={6} md={4}>
               <Paper
                 elevation={0}
                 sx={{
@@ -240,9 +240,9 @@ const Products: React.FC = () => {
                   </Button>
                 </CardActions>
               </Paper>
-            </Grid>
+            </Grid2>
           ))}
-        </Grid>
+        </Grid2>
       </Container>
     </Box>
   );

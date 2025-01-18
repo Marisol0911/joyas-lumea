@@ -21,6 +21,7 @@ import {
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
+import { useStyles } from "../styles/Checkout.styles";
 
 interface CheckoutForm {
   firstName: string;
@@ -38,6 +39,7 @@ interface CheckoutForm {
 }
 
 const Checkout: React.FC = () => {
+  const classes = useStyles();
   const navigate = useNavigate();
   const { items, clearCart } = useCart();
   const [formData, setFormData] = useState<CheckoutForm>({
@@ -73,7 +75,6 @@ const Checkout: React.FC = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitted(true);
-    // Here you would typically process the payment and create the order
     setTimeout(() => {
       clearCart();
       navigate("/checkout/success");
@@ -82,8 +83,8 @@ const Checkout: React.FC = () => {
 
   if (items.length === 0) {
     return (
-      <Container sx={{ py: 8 }}>
-        <Alert severity="info" sx={{ mb: 2 }}>
+      <Container className={classes.container}>
+        <Alert severity="info" className={classes.alert}>
           Tu carrito está vacío. Por favor, agrega algunos productos antes de
           proceder al pago.
         </Alert>
@@ -99,44 +100,22 @@ const Checkout: React.FC = () => {
   }
 
   return (
-    <Container sx={{ py: 8 }}>
-      <Typography
-        variant="h2"
-        component="h1"
-        sx={{
-          mb: 6,
-          textAlign: "center",
-          fontFamily: "Playfair Display",
-          position: "relative",
-          "&::after": {
-            content: '""',
-            position: "absolute",
-            bottom: -16,
-            left: "50%",
-            transform: "translateX(-50%)",
-            width: "60px",
-            height: "2px",
-            background: "linear-gradient(90deg, #E12D79, #F4B400)",
-          },
-        }}
-      >
+    <Container className={classes.container}>
+      <Typography variant="h2" component="h1" className={classes.title}>
         Finalizar Compra
       </Typography>
 
       {submitted && (
-        <Alert severity="success" sx={{ mb: 4 }}>
+        <Alert severity="success" className={classes.alert}>
           Procesando tu pedido...
         </Alert>
       )}
 
       <Grid container spacing={4}>
         <Grid item xs={12} md={8}>
-          <Paper elevation={0} sx={{ p: 4 }}>
+          <Paper elevation={0} className={classes.paper}>
             <form onSubmit={handleSubmit}>
-              <Typography
-                variant="h6"
-                sx={{ mb: 3, fontFamily: "Playfair Display" }}
-              >
+              <Typography variant="h6" className={classes.sectionTitle}>
                 Información Personal
               </Typography>
               <Grid container spacing={3}>
@@ -185,7 +164,7 @@ const Checkout: React.FC = () => {
 
               <Typography
                 variant="h6"
-                sx={{ mb: 3, mt: 4, fontFamily: "Playfair Display" }}
+                className={`${classes.sectionTitle} ${classes.formSection}`}
               >
                 Dirección de Envío
               </Typography>
@@ -225,7 +204,6 @@ const Checkout: React.FC = () => {
                         Valle del Cauca
                       </MenuItem>
                       <MenuItem value="Cundinamarca">Cundinamarca</MenuItem>
-                      {/* Add more departments as needed */}
                     </Select>
                   </FormControl>
                 </Grid>
@@ -243,7 +221,7 @@ const Checkout: React.FC = () => {
 
               <Typography
                 variant="h6"
-                sx={{ mb: 3, mt: 4, fontFamily: "Playfair Display" }}
+                className={`${classes.sectionTitle} ${classes.formSection}`}
               >
                 Información de Pago
               </Typography>
@@ -294,21 +272,18 @@ const Checkout: React.FC = () => {
         </Grid>
 
         <Grid item xs={12} md={4}>
-          <Paper elevation={0} sx={{ p: 4, position: "sticky", top: 20 }}>
-            <Typography
-              variant="h6"
-              sx={{ mb: 3, fontFamily: "Playfair Display" }}
-            >
+          <Paper elevation={0} className={classes.orderSummary}>
+            <Typography variant="h6" className={classes.sectionTitle}>
               Resumen del Pedido
             </Typography>
-            <List sx={{ mb: 3 }}>
+            <List>
               {items.map((item) => (
-                <ListItem key={item.id} sx={{ px: 0, py: 2 }}>
+                <ListItem key={item.id} className={classes.listItem}>
                   <ListItemAvatar>
                     <Avatar
                       variant="square"
                       src={item.image}
-                      sx={{ width: 60, height: 60, borderRadius: 1 }}
+                      className={classes.productImage}
                     />
                   </ListItemAvatar>
                   <ListItemText
@@ -319,33 +294,27 @@ const Checkout: React.FC = () => {
                       </Typography>
                     }
                   />
-                  <Typography variant="body1" color="primary.main">
+                  <Typography variant="body1" color="primary">
                     {item.price}
                   </Typography>
                 </ListItem>
               ))}
             </List>
-            <Divider sx={{ borderColor: "rgba(244, 180, 0, 0.1)", my: 2 }} />
-            <Box sx={{ mb: 4 }}>
-              <Box
-                sx={{ display: "flex", justifyContent: "space-between", mb: 1 }}
-              >
+            <Divider className={classes.divider} />
+            <Box className={classes.totalSection}>
+              <Box className={classes.totalRow}>
                 <Typography>Subtotal:</Typography>
                 <Typography>
                   COP {totalPrice.toLocaleString("es-CO")}
                 </Typography>
               </Box>
-              <Box
-                sx={{ display: "flex", justifyContent: "space-between", mb: 1 }}
-              >
+              <Box className={classes.totalRow}>
                 <Typography>Envío:</Typography>
                 <Typography>Gratis</Typography>
               </Box>
-              <Box
-                sx={{ display: "flex", justifyContent: "space-between", mt: 2 }}
-              >
+              <Box className={classes.totalRow}>
                 <Typography variant="h6">Total:</Typography>
-                <Typography variant="h6" color="primary.main">
+                <Typography variant="h6" color="primary">
                   COP {totalPrice.toLocaleString("es-CO")}
                 </Typography>
               </Box>
@@ -357,14 +326,7 @@ const Checkout: React.FC = () => {
               size="large"
               onClick={handleSubmit}
               disabled={submitted}
-              sx={{
-                py: 1.5,
-                bgcolor: "primary.main",
-                color: "#FFFFFF",
-                "&:hover": {
-                  bgcolor: "primary.dark",
-                },
-              }}
+              className={classes.submitButton}
             >
               Confirmar Pedido
             </Button>

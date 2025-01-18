@@ -11,7 +11,6 @@ import {
   Avatar,
   Button,
   Divider,
-  Stack,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
@@ -19,8 +18,10 @@ import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import { useCart } from "../context/CartContext";
 import { useNavigate } from "react-router-dom";
+import { useStyles } from "../styles/Cart.styles";
 
 const Cart: React.FC = () => {
+  const classes = useStyles();
   const { items, isOpen, toggleCart, removeItem, updateQuantity, totalItems } =
     useCart();
   const navigate = useNavigate();
@@ -44,141 +45,77 @@ const Cart: React.FC = () => {
       open={isOpen}
       onClose={toggleCart}
       PaperProps={{
-        sx: {
-          width: { xs: "100%", sm: 400 },
-          bgcolor: "#FFFFFF",
-          borderLeft: "1px solid rgba(244, 180, 0, 0.1)",
-        },
+        className: classes.drawer,
       }}
     >
-      <Box
-        sx={{ p: 2, height: "100%", display: "flex", flexDirection: "column" }}
-      >
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            mb: 2,
-          }}
-        >
-          <Typography
-            variant="h6"
-            sx={{ fontFamily: "Playfair Display", letterSpacing: 1 }}
-          >
+      <Box className={classes.container}>
+        <Box className={classes.header}>
+          <Typography variant="h6" className={classes.title}>
             Carrito de Compras ({totalItems})
           </Typography>
-          <IconButton onClick={toggleCart} sx={{ color: "text.primary" }}>
+          <IconButton onClick={toggleCart} color="primary">
             <CloseIcon />
           </IconButton>
         </Box>
-        <Divider sx={{ borderColor: "rgba(244, 180, 0, 0.1)" }} />
+        <Divider className={classes.divider} />
 
         {items.length === 0 ? (
-          <Box
-            sx={{
-              flex: 1,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              flexDirection: "column",
-              gap: 2,
-              color: "text.secondary",
-            }}
-          >
+          <Box className={classes.emptyCart}>
             <Typography variant="body1">Tu carrito está vacío</Typography>
             <Button
               variant="outlined"
               color="primary"
               onClick={toggleCart}
-              sx={{ borderColor: "primary.main" }}
+              className={classes.continueButton}
             >
               Continuar Comprando
             </Button>
           </Box>
         ) : (
           <>
-            <List sx={{ flex: 1, overflowY: "auto" }}>
+            <List className={classes.itemsList}>
               {items.map((item) => (
-                <ListItem
-                  key={item.id}
-                  sx={{
-                    mb: 2,
-                    bgcolor: "background.paper",
-                    border: "1px solid rgba(244, 180, 0, 0.1)",
-                    position: "relative",
-                  }}
-                >
+                <ListItem key={item.id} className={classes.listItem}>
                   <ListItemAvatar>
-                    <Avatar
-                      variant="square"
-                      src={item.image}
-                      sx={{ width: 60, height: 60, borderRadius: 1 }}
-                    />
+                    <Avatar variant="square" src={item.image} />
                   </ListItemAvatar>
                   <ListItemText
-                    primary={
-                      <Typography variant="subtitle1" sx={{ fontWeight: 500 }}>
-                        {item.name}
-                      </Typography>
-                    }
-                    secondary={
-                      <Stack spacing={1}>
-                        <Typography variant="body2" color="primary.main">
-                          {item.price}
-                        </Typography>
-                        <Box
-                          sx={{ display: "flex", alignItems: "center", gap: 1 }}
-                        >
-                          <IconButton
-                            size="small"
-                            onClick={() =>
-                              updateQuantity(item.id, item.quantity - 1)
-                            }
-                            sx={{ color: "text.secondary" }}
-                          >
-                            <RemoveIcon fontSize="small" />
-                          </IconButton>
-                          <Typography>{item.quantity}</Typography>
-                          <IconButton
-                            size="small"
-                            onClick={() =>
-                              updateQuantity(item.id, item.quantity + 1)
-                            }
-                            sx={{ color: "text.secondary" }}
-                          >
-                            <AddIcon fontSize="small" />
-                          </IconButton>
-                        </Box>
-                      </Stack>
-                    }
+                    primary={item.name}
+                    secondary={`Cantidad: ${item.quantity}`}
                   />
-                  <IconButton
-                    onClick={() => removeItem(item.id)}
-                    sx={{
-                      position: "absolute",
-                      top: 8,
-                      right: 8,
-                      color: "text.secondary",
-                    }}
-                  >
-                    <DeleteOutlineIcon />
-                  </IconButton>
+                  <Box>
+                    <IconButton
+                      size="small"
+                      onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                      disabled={item.quantity <= 1}
+                    >
+                      <RemoveIcon />
+                    </IconButton>
+                    <Typography component="span" sx={{ mx: 1 }}>
+                      {item.quantity}
+                    </Typography>
+                    <IconButton
+                      size="small"
+                      onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                    >
+                      <AddIcon />
+                    </IconButton>
+                    <IconButton
+                      size="small"
+                      onClick={() => removeItem(item.id)}
+                      color="error"
+                    >
+                      <DeleteOutlineIcon />
+                    </IconButton>
+                  </Box>
                 </ListItem>
               ))}
             </List>
-            <Box
-              sx={{
-                mt: 2,
-                pt: 2,
-                borderTop: "1px solid rgba(244, 180, 0, 0.1)",
-              }}
-            >
-              <Box
-                sx={{ display: "flex", justifyContent: "space-between", mb: 2 }}
-              >
+
+            <Box className={classes.totalSection}>
+              <Box className={classes.totalRow}>
                 <Typography variant="h6">Total:</Typography>
-                <Typography variant="h6" color="primary.main">
+                <Typography variant="h6" color="primary">
                   {formattedTotal}
                 </Typography>
               </Box>
@@ -188,14 +125,7 @@ const Cart: React.FC = () => {
                 color="primary"
                 size="large"
                 onClick={handleCheckout}
-                sx={{
-                  py: 1.5,
-                  bgcolor: "primary.main",
-                  color: "#FFFFFF",
-                  "&:hover": {
-                    bgcolor: "primary.dark",
-                  },
-                }}
+                className={classes.checkoutButton}
               >
                 Proceder al Pago
               </Button>
