@@ -18,16 +18,23 @@ import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import { useCart } from "../context/CartContext";
+import { useNavigate } from "react-router-dom";
 
 const Cart: React.FC = () => {
   const { items, isOpen, toggleCart, removeItem, updateQuantity, totalItems } =
     useCart();
+  const navigate = useNavigate();
 
   const totalPrice = items.reduce(
     (sum, item) =>
       sum + parseInt(item.price.replace(/[^0-9]/g, "")) * item.quantity,
     0
   );
+
+  const handleCheckout = () => {
+    toggleCart();
+    navigate("/checkout");
+  };
 
   const formattedTotal = `COP ${totalPrice.toLocaleString("es-CO")}`;
 
@@ -180,6 +187,7 @@ const Cart: React.FC = () => {
                 variant="contained"
                 color="primary"
                 size="large"
+                onClick={handleCheckout}
                 sx={{
                   py: 1.5,
                   bgcolor: "primary.main",

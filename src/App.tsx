@@ -6,6 +6,8 @@ import Home from "./pages/Home";
 import Products from "./pages/Products";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
+import Checkout from "./pages/Checkout";
+import CheckoutSuccess from "./pages/CheckoutSuccess";
 import { CartProvider } from "./context/CartContext";
 
 const theme = createTheme({
@@ -139,6 +141,8 @@ function App() {
             <Route path="/products" element={<Products />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/checkout" element={<Checkout />} />
+            <Route path="/checkout/success" element={<CheckoutSuccess />} />
           </Routes>
         </Router>
       </CartProvider>
