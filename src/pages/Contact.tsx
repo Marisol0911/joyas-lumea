@@ -34,7 +34,6 @@ const Contact: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Here you would typically send the form data to your backend
     console.log("Form submitted:", formData);
     setSubmitted(true);
     setFormData({
@@ -52,7 +51,7 @@ const Contact: React.FC = () => {
         component="h1"
         sx={{ mb: 6, textAlign: "center", fontFamily: "Playfair Display" }}
       >
-        Contact Us
+        Contáctanos
       </Typography>
 
       <Grid container spacing={6}>
@@ -63,29 +62,29 @@ const Contact: React.FC = () => {
               <Box sx={{ mb: 4 }}>
                 <LocationOnIcon color="primary" sx={{ fontSize: 40, mb: 1 }} />
                 <Typography variant="h6" sx={{ mb: 1 }}>
-                  Visit Us
+                  Visítanos
                 </Typography>
                 <Typography color="text.secondary">
-                  123 Jewelry Lane
+                  Calle 123 #45-67
                   <br />
-                  New York, NY 10001
+                  Bogotá, Colombia
                 </Typography>
               </Box>
 
               <Box sx={{ mb: 4 }}>
                 <PhoneIcon color="primary" sx={{ fontSize: 40, mb: 1 }} />
                 <Typography variant="h6" sx={{ mb: 1 }}>
-                  Call Us
+                  Llámanos
                 </Typography>
                 <Typography color="text.secondary">
-                  +1 (555) 123-4567
+                  +57 (601) 123-4567
                 </Typography>
               </Box>
 
               <Box>
                 <EmailIcon color="primary" sx={{ fontSize: 40, mb: 1 }} />
                 <Typography variant="h6" sx={{ mb: 1 }}>
-                  Email Us
+                  Escríbenos
                 </Typography>
                 <Typography color="text.secondary">
                   info@lumeajewelry.com
@@ -100,7 +99,7 @@ const Contact: React.FC = () => {
           <Paper sx={{ p: 4 }}>
             {submitted && (
               <Alert severity="success" sx={{ mb: 3 }}>
-                Thank you for your message! We'll get back to you soon.
+                ¡Gracias por tu mensaje! Te contactaremos pronto.
               </Alert>
             )}
             <form onSubmit={handleSubmit}>
@@ -109,7 +108,7 @@ const Contact: React.FC = () => {
                   <TextField
                     required
                     fullWidth
-                    label="Name"
+                    label="Nombre"
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
@@ -119,7 +118,7 @@ const Contact: React.FC = () => {
                   <TextField
                     required
                     fullWidth
-                    label="Email"
+                    label="Correo Electrónico"
                     name="email"
                     type="email"
                     value={formData.email}
@@ -130,7 +129,7 @@ const Contact: React.FC = () => {
                   <TextField
                     required
                     fullWidth
-                    label="Subject"
+                    label="Asunto"
                     name="subject"
                     value={formData.subject}
                     onChange={handleChange}
@@ -142,7 +141,7 @@ const Contact: React.FC = () => {
                     fullWidth
                     multiline
                     rows={4}
-                    label="Message"
+                    label="Mensaje"
                     name="message"
                     value={formData.message}
                     onChange={handleChange}
@@ -156,7 +155,7 @@ const Contact: React.FC = () => {
                     size="large"
                     sx={{ mt: 2 }}
                   >
-                    Send Message
+                    Enviar Mensaje
                   </Button>
                 </Grid>
               </Grid>

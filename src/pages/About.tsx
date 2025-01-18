@@ -14,15 +14,16 @@ const About: React.FC = () => {
           component="h1"
           sx={{ mb: 4, fontFamily: "Playfair Display" }}
         >
-          About Lumea Jewelry
+          Sobre Lumea Jewelry
         </Typography>
         <Typography variant="h6" color="text.secondary" sx={{ mb: 4 }}>
-          Crafting Timeless Elegance Since 2010
+          Creando Elegancia Atemporal Desde 2010
         </Typography>
         <Typography variant="body1" sx={{ mb: 4 }}>
-          At Lumea Jewelry, we believe that every piece of jewelry tells a
-          unique story. Our passion for craftsmanship and attention to detail
-          has made us a trusted name in fine jewelry for over a decade.
+          En Lumea Jewelry, creemos que cada pieza de joyería cuenta una
+          historia única. Nuestra pasión por la artesanía y atención al detalle
+          nos ha convertido en un nombre de confianza en joyería fina por más de
+          una década.
         </Typography>
       </Box>
 
@@ -32,11 +33,11 @@ const About: React.FC = () => {
           <Paper sx={{ p: 4, height: "100%", textAlign: "center" }}>
             <DiamondIcon sx={{ fontSize: 40, color: "primary.main", mb: 2 }} />
             <Typography variant="h5" component="h2" sx={{ mb: 2 }}>
-              Quality
+              Calidad
             </Typography>
             <Typography variant="body1" color="text.secondary">
-              We use only the finest materials and maintain the highest
-              standards of craftsmanship in every piece we create.
+              Utilizamos solo los mejores materiales y mantenemos los más altos
+              estándares de artesanía en cada pieza que creamos.
             </Typography>
           </Paper>
         </Grid>
@@ -44,11 +45,11 @@ const About: React.FC = () => {
           <Paper sx={{ p: 4, height: "100%", textAlign: "center" }}>
             <StarIcon sx={{ fontSize: 40, color: "primary.main", mb: 2 }} />
             <Typography variant="h5" component="h2" sx={{ mb: 2 }}>
-              Design
+              Diseño
             </Typography>
             <Typography variant="body1" color="text.secondary">
-              Our designs blend timeless elegance with contemporary style,
-              creating pieces that are both modern and enduring.
+              Nuestros diseños combinan la elegancia atemporal con el estilo
+              contemporáneo, creando piezas que son modernas y duraderas.
             </Typography>
           </Paper>
         </Grid>
@@ -58,11 +59,11 @@ const About: React.FC = () => {
               sx={{ fontSize: 40, color: "primary.main", mb: 2 }}
             />
             <Typography variant="h5" component="h2" sx={{ mb: 2 }}>
-              Service
+              Servicio
             </Typography>
             <Typography variant="body1" color="text.secondary">
-              We pride ourselves on providing exceptional customer service and
-              ensuring complete satisfaction with every purchase.
+              Nos enorgullecemos de brindar un servicio al cliente excepcional y
+              garantizar la satisfacción completa con cada compra.
             </Typography>
           </Paper>
         </Grid>
@@ -75,18 +76,18 @@ const About: React.FC = () => {
           component="h2"
           sx={{ mb: 4, fontFamily: "Playfair Display" }}
         >
-          Our Story
+          Nuestra Historia
         </Typography>
         <Typography variant="body1" sx={{ mb: 2 }}>
-          Founded in 2010, Lumea Jewelry began as a small family-owned boutique
-          with a vision to create beautiful, high-quality jewelry that would
-          become cherished family heirlooms.
+          Fundada en 2010, Lumea Jewelry comenzó como una pequeña boutique
+          familiar con la visión de crear hermosas joyas de alta calidad que se
+          convertirían en preciadas herencias familiares.
         </Typography>
         <Typography variant="body1">
-          Today, we continue to uphold these values while embracing modern
-          technology and contemporary design trends. Each piece in our
-          collection is carefully crafted to meet our exacting standards of
-          quality and beauty.
+          Hoy, continuamos manteniendo estos valores mientras abrazamos la
+          tecnología moderna y las tendencias contemporáneas de diseño. Cada
+          pieza en nuestra colección está cuidadosamente elaborada para cumplir
+          con nuestros exigentes estándares de calidad y belleza.
         </Typography>
       </Box>
     </Container>

@@ -4,7 +4,7 @@ import { Link as RouterLink } from "react-router-dom";
 
 const Navbar: React.FC = () => {
   return (
-    <AppBar position="static" color="primary">
+    <AppBar position="static">
       <Container>
         <Toolbar sx={{ justifyContent: "space-between" }}>
           <Typography
@@ -13,24 +13,65 @@ const Navbar: React.FC = () => {
             to="/"
             sx={{
               textDecoration: "none",
-              color: "inherit",
+              color: "text.primary",
               fontFamily: "Playfair Display",
+              fontWeight: 600,
+              letterSpacing: 1,
+              "&:hover": {
+                color: "primary.main",
+              },
             }}
           >
-            Lumea Jewelry
+            LUMÉA
           </Typography>
           <div>
-            <Button color="inherit" component={RouterLink} to="/">
-              Home
+            <Button
+              color="inherit"
+              component={RouterLink}
+              to="/"
+              sx={{
+                "&:hover": {
+                  color: "primary.main",
+                },
+              }}
+            >
+              Inicio
             </Button>
-            <Button color="inherit" component={RouterLink} to="/products">
-              Products
+            <Button
+              color="inherit"
+              component={RouterLink}
+              to="/products"
+              sx={{
+                "&:hover": {
+                  color: "primary.main",
+                },
+              }}
+            >
+              Productos
             </Button>
-            <Button color="inherit" component={RouterLink} to="/about">
-              About
+            <Button
+              color="inherit"
+              component={RouterLink}
+              to="/about"
+              sx={{
+                "&:hover": {
+                  color: "primary.main",
+                },
+              }}
+            >
+              Nosotros
             </Button>
-            <Button color="inherit" component={RouterLink} to="/contact">
-              Contact
+            <Button
+              color="inherit"
+              component={RouterLink}
+              to="/contact"
+              sx={{
+                "&:hover": {
+                  color: "primary.main",
+                },
+              }}
+            >
+              Contacto
             </Button>
           </div>
         </Toolbar>

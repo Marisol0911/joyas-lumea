@@ -10,18 +10,79 @@ import Contact from "./pages/Contact";
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#8B4513", // A warm brown color suitable for jewelry
-      light: "#A0522D",
-      dark: "#654321",
+      main: "#E12D79", // Magenta for main interactive elements
+      light: "#E65691",
+      dark: "#B02460",
     },
     secondary: {
-      main: "#DAA520", // Golden color
-      light: "#FFD700",
-      dark: "#B8860B",
+      main: "#F4B400", // Gold for luxury accents
+      light: "#F6C333",
+      dark: "#C29000",
+    },
+    text: {
+      primary: "#000000", // Black for main text
+      secondary: "#666666", // Softer black for secondary text
+    },
+    background: {
+      default: "#FFFFFF", // White background
+      paper: "#FFFFFF",
     },
   },
   typography: {
     fontFamily: "'Playfair Display', 'Roboto', 'Arial', sans-serif",
+    h1: {
+      color: "#000000",
+    },
+    h2: {
+      color: "#000000",
+    },
+    h3: {
+      color: "#000000",
+    },
+    h4: {
+      color: "#000000",
+    },
+    h5: {
+      color: "#000000",
+    },
+    h6: {
+      color: "#000000",
+    },
+  },
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          borderRadius: 0, // Square buttons for elegance
+          textTransform: "none", // Preserve original text case
+        },
+        contained: {
+          boxShadow: "none", // Remove default shadow
+          "&:hover": {
+            boxShadow: "none",
+          },
+        },
+      },
+    },
+    MuiPaper: {
+      styleOverrides: {
+        root: {
+          borderRadius: 0, // Square corners for elegance
+          boxShadow: "none", // Remove default shadow
+          border: `1px solid #F4B400`, // Gold border
+        },
+      },
+    },
+    MuiAppBar: {
+      styleOverrides: {
+        root: {
+          backgroundColor: "#FFFFFF",
+          color: "#000000",
+          boxShadow: "none",
+          borderBottom: `1px solid #F4B400`,
+        },
+      },
+    },
   },
 });
 

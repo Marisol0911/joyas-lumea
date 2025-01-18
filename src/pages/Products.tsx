@@ -16,45 +16,45 @@ import {
 const products = [
   {
     id: 1,
-    name: "Diamond Necklace",
-    price: "$999.99",
+    name: "Collar de Diamantes",
+    price: "COP 4.500.000",
     image: "/images/diamond-necklace.jpg",
-    category: "Necklaces",
+    category: "Collares",
   },
   {
     id: 2,
-    name: "Gold Ring",
-    price: "$599.99",
+    name: "Anillo de Oro",
+    price: "COP 2.800.000",
     image: "/images/gold-ring.jpg",
-    category: "Rings",
+    category: "Anillos",
   },
   {
     id: 3,
-    name: "Pearl Earrings",
-    price: "$299.99",
+    name: "Aretes de Perlas",
+    price: "COP 1.200.000",
     image: "/images/pearl-earrings.jpg",
-    category: "Earrings",
+    category: "Aretes",
   },
   {
     id: 4,
-    name: "Silver Bracelet",
-    price: "$199.99",
+    name: "Pulsera de Plata",
+    price: "COP 850.000",
     image: "/images/silver-bracelet.jpg",
-    category: "Bracelets",
+    category: "Pulseras",
   },
   {
     id: 5,
-    name: "Sapphire Ring",
-    price: "$799.99",
+    name: "Anillo de Zafiro",
+    price: "COP 3.200.000",
     image: "/images/sapphire-ring.jpg",
-    category: "Rings",
+    category: "Anillos",
   },
   {
     id: 6,
-    name: "Gold Bracelet",
-    price: "$399.99",
+    name: "Pulsera de Oro",
+    price: "COP 1.800.000",
     image: "/images/gold-bracelet.jpg",
-    category: "Bracelets",
+    category: "Pulseras",
   },
   // Add more products as needed
 ];
@@ -76,7 +76,7 @@ const Products: React.FC = () => {
         component="h1"
         sx={{ mb: 6, textAlign: "center", fontFamily: "Playfair Display" }}
       >
-        Our Collection
+        Nuestra Colección
       </Typography>
       <Grid container spacing={4}>
         {products.map((product) => (
@@ -124,10 +124,10 @@ const Products: React.FC = () => {
               </CardContent>
               <CardActions>
                 <Button size="small" color="primary">
-                  View Details
+                  Ver Detalles
                 </Button>
                 <Button size="small" color="secondary">
-                  Add to Cart
+                  Agregar al Carrito
                 </Button>
               </CardActions>
             </Card>
