@@ -29,20 +29,25 @@ const Home: React.FC = () => {
           },
         }}
       >
-        <Container>
-          <Typography
-            variant="h1"
-            component="h1"
+        <Container
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            textAlign: "center",
+          }}
+        >
+          <Box
+            component="img"
+            src="/images/logo.png"
+            alt="LUMÉA Jewelry"
             sx={{
-              mb: 3,
-              fontFamily: "Playfair Display",
-              fontSize: { xs: "2.5rem", md: "4rem" },
-              fontWeight: 600,
-              letterSpacing: 2,
+              height: "120px",
+              width: "auto",
+              mb: 4,
+              filter: "brightness(0) invert(1)", // Makes the logo white
             }}
-          >
-            LUMÉA
-          </Typography>
+          />
           <Typography
             variant="h4"
             sx={{
