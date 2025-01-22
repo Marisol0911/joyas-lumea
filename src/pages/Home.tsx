@@ -1,6 +1,8 @@
 import React from "react";
 import { Container, Typography, Box, Button, Grid, Paper } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import Banner from "../components/Banner";
+import SearchBar from "../components/SearchBar";
 
 const Home: React.FC = () => {
   const navigate = useNavigate();
@@ -78,6 +80,7 @@ const Home: React.FC = () => {
       </Box>
 
       <Container sx={{ my: 12 }}>
+        <SearchBar />
         <Typography
           variant="h2"
           component="h2"
@@ -101,13 +104,9 @@ const Home: React.FC = () => {
         >
           Colecciones Exclusivas
         </Typography>
+        <Banner />
         <Grid container spacing={4}>
-          {[
-            ["Collares", "collares"],
-            ["Anillos", "anillos"],
-            ["Aretes", "aretes"],
-            ["Pulseras", "pulseras"],
-          ].map(([category, url]) => (
+          {["Collares", "Anillos", "Aretes", "Pulseras"].map((category) => (
             <Grid item xs={12} sm={6} md={3} key={category}>
               <Paper
                 elevation={0}

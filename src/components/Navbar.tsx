@@ -2,15 +2,16 @@ import React from "react";
 import {
   AppBar,
   Toolbar,
+  Typography,
   Button,
-  Container,
   Box,
+  Container,
   IconButton,
-  Badge,
 } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
 import { useCart } from "../context/CartContext";
+import SearchBar from "./SearchBar";
 import Cart from "./Cart";
 
 const Navbar: React.FC = () => {
@@ -18,18 +19,17 @@ const Navbar: React.FC = () => {
 
   return (
     <>
-      <AppBar position="static">
-        <Container>
-          <Toolbar sx={{ justifyContent: "space-between" }}>
-            <Box
-              component={RouterLink}
+      <AppBar
+        position="sticky"
+        color="transparent"
+        sx={{ backdropFilter: "blur(8px)" }}
+      >
+        <Container maxWidth="xl">
+          <Toolbar sx={{ justifyContent: "space-between", padding: "8px 0" }}>
+            {/* Logo */}
+            <RouterLink
               to="/"
-              sx={{
-                textDecoration: "none",
-                display: "flex",
-                alignItems: "center",
-                height: "60px",
-              }}
+              style={{ textDecoration: "none", color: "inherit" }}
             >
               <Box
                 component="img"
@@ -40,31 +40,26 @@ const Navbar: React.FC = () => {
                   width: "auto",
                 }}
               />
-            </Box>
-            <Box sx={{ display: "flex", alignItems: "center" }}>
+            </RouterLink>
+
+            {/* Search Bar */}
+            <SearchBar />
+
+            {/* Navigation Links */}
+            <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
               <Button
-                color="inherit"
                 component={RouterLink}
                 to="/"
-                sx={{
-                  mx: 1,
-                  "&:hover": {
-                    color: "primary.main",
-                  },
-                }}
+                color="inherit"
+                sx={{ display: { xs: "none", md: "block" } }}
               >
                 Inicio
               </Button>
               <Button
-                color="inherit"
                 component={RouterLink}
                 to="/products"
-                sx={{
-                  mx: 1,
-                  "&:hover": {
-                    color: "primary.main",
-                  },
-                }}
+                color="inherit"
+                sx={{ display: { xs: "none", md: "block" } }}
               >
                 Productos
               </Button>
@@ -95,27 +90,35 @@ const Navbar: React.FC = () => {
                 Contacto
               </Button>
               <IconButton
+                color="inherit"
                 onClick={toggleCart}
                 sx={{
-                  ml: 2,
-                  color: "text.primary",
+                  position: "relative",
                   "&:hover": {
-                    color: "primary.main",
+                    backgroundColor: "rgba(255, 255, 255, 0.1)",
                   },
                 }}
               >
-                <Badge
-                  badgeContent={totalItems}
-                  color="primary"
-                  sx={{
-                    "& .MuiBadge-badge": {
-                      bgcolor: "primary.main",
-                      color: "#FFFFFF",
-                    },
-                  }}
-                >
-                  <ShoppingBagOutlinedIcon />
-                </Badge>
+                <ShoppingBagOutlinedIcon />
+                {totalItems > 0 && (
+                  <Box
+                    sx={{
+                      position: "absolute",
+                      top: -8,
+                      right: -8,
+                      backgroundColor: "primary.main",
+                      borderRadius: "50%",
+                      width: 20,
+                      height: 20,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      fontSize: "0.75rem",
+                    }}
+                  >
+                    {totalItems}
+                  </Box>
+                )}
               </IconButton>
             </Box>
           </Toolbar>

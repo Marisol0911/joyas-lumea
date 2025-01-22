@@ -9,6 +9,7 @@ import Contact from "./pages/Contact";
 import Checkout from "./pages/Checkout";
 import CheckoutSuccess from "./pages/CheckoutSuccess";
 import { CartProvider } from "./context/CartContext";
+import WhatsAppButton from "./components/WhatsAppButton";
 
 const theme = createTheme({
   palette: {
@@ -144,6 +145,7 @@ function App() {
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/checkout/success" element={<CheckoutSuccess />} />
           </Routes>
+          <WhatsAppButton />
         </Router>
       </CartProvider>
     </ThemeProvider>
