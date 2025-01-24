@@ -28,7 +28,7 @@ const theme = createTheme({
       secondary: "#666666",
     },
     background: {
-      default: "#FAFAFA", // Slightly off-white background
+      default: "#FAFAFA", // Slightly off-white backgroun
       paper: "#FFFFFF",
     },
     divider: "rgba(244, 180, 0, 0.1)", // Subtle gold for dividers
