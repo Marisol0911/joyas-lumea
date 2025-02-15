@@ -14,50 +14,74 @@ import WhatsAppButton from "./components/WhatsAppButton";
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#E12D79",
-      light: "#E65691",
-      dark: "#B02460",
+      main: "#B8860B", // Dorado oscuro elegante
+      light: "#D4AF37", // Dorado claro
+      dark: "#8B6914", // Dorado más oscuro
     },
     secondary: {
-      main: "#F4B400",
-      light: "#F6C333",
-      dark: "#C29000",
+      main: "#E8B4BC", // Rosa suave elegante
+      light: "#F4D0D6", // Rosa claro
+      dark: "#D49AA2", // Rosa oscuro
     },
     text: {
-      primary: "#000000",
-      secondary: "#666666",
+      primary: "#1C1C1C",
+      secondary: "#4A4A4A",
     },
     background: {
-      default: "#FAFAFA", // Slightly off-white backgroun
+      default: "#FDFAFA", // Blanco con un toque rosado
       paper: "#FFFFFF",
     },
-    divider: "rgba(244, 180, 0, 0.1)", // Subtle gold for dividers
+    divider: "rgba(232, 180, 188, 0.15)", // Rosa sutil para divisores
   },
   typography: {
-    fontFamily: "'Playfair Display', 'Roboto', 'Arial', sans-serif",
+    fontFamily: "'Cormorant Garamond', 'Playfair Display', serif",
     h1: {
-      color: "#000000",
-      letterSpacing: "0.05em",
+      fontFamily: "'Cormorant Garamond', serif",
+      fontWeight: 300,
+      letterSpacing: "0.1em",
+      lineHeight: 1.2,
     },
     h2: {
-      color: "#000000",
-      letterSpacing: "0.05em",
+      fontFamily: "'Cormorant Garamond', serif",
+      fontWeight: 300,
+      letterSpacing: "0.08em",
+      lineHeight: 1.3,
     },
     h3: {
-      color: "#000000",
-      letterSpacing: "0.05em",
+      fontFamily: "'Cormorant Garamond', serif",
+      fontWeight: 300,
+      letterSpacing: "0.08em",
     },
     h4: {
-      color: "#000000",
+      fontFamily: "'Cormorant Garamond', serif",
+      fontWeight: 300,
       letterSpacing: "0.05em",
     },
     h5: {
-      color: "#000000",
+      fontFamily: "'Cormorant Garamond', serif",
+      fontWeight: 300,
       letterSpacing: "0.05em",
     },
     h6: {
-      color: "#000000",
+      fontFamily: "'Cormorant Garamond', serif",
+      fontWeight: 300,
       letterSpacing: "0.05em",
+    },
+    body1: {
+      fontFamily: "'Cormorant Garamond', serif",
+      fontSize: "1.1rem",
+      letterSpacing: "0.03em",
+      lineHeight: 1.6,
+    },
+    body2: {
+      fontFamily: "'Cormorant Garamond', serif",
+      fontSize: "1rem",
+      letterSpacing: "0.03em",
+    },
+    button: {
+      fontFamily: "'Cormorant Garamond', serif",
+      letterSpacing: "0.1em",
+      fontWeight: 400,
     },
   },
   components: {
@@ -65,7 +89,7 @@ const theme = createTheme({
       styleOverrides: {
         body: {
           backgroundImage:
-            "linear-gradient(to right, #FAFAFA, #FFFFFF, #FAFAFA)",
+            "linear-gradient(to right, #FDFAFA, #FFFFFF, #FDFAFA)",
         },
       },
     },
@@ -73,13 +97,25 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           borderRadius: 0,
+          padding: "12px 32px",
+          transition: "all 0.3s ease-in-out",
           textTransform: "none",
-          letterSpacing: "0.05em",
+          letterSpacing: "0.1em",
+          "&:hover": {
+            transform: "translateY(-2px)",
+          },
         },
         contained: {
           boxShadow: "none",
           "&:hover": {
-            boxShadow: "none",
+            boxShadow: "0 6px 20px rgba(232, 180, 188, 0.25)",
+          },
+        },
+        outlined: {
+          borderWidth: "1px",
+          "&:hover": {
+            borderWidth: "1px",
+            backgroundColor: "rgba(232, 180, 188, 0.05)",
           },
         },
       },
@@ -89,10 +125,11 @@ const theme = createTheme({
         root: {
           borderRadius: 0,
           boxShadow: "none",
-          backgroundImage: "linear-gradient(135deg, #FFFFFF 0%, #FAFAFA 100%)",
-          border: "1px solid rgba(244, 180, 0, 0.1)",
+          backgroundImage: "none",
+          backgroundColor: "#FFFFFF",
+          transition: "all 0.3s ease-in-out",
           "&:hover": {
-            borderColor: "rgba(244, 180, 0, 0.3)",
+            boxShadow: "0 8px 24px rgba(232, 180, 188, 0.15)",
           },
         },
       },
@@ -100,11 +137,10 @@ const theme = createTheme({
     MuiAppBar: {
       styleOverrides: {
         root: {
-          backgroundColor: "rgba(255, 255, 255, 0.95)",
+          backgroundColor: "rgba(255, 255, 255, 0.98)",
           backdropFilter: "blur(8px)",
-          color: "#000000",
+          borderBottom: "1px solid rgba(232, 180, 188, 0.2)",
           boxShadow: "none",
-          borderBottom: "1px solid rgba(244, 180, 0, 0.1)",
         },
       },
     },
@@ -121,8 +157,27 @@ const theme = createTheme({
             width: "100vw",
             height: "100%",
             backgroundImage:
-              "radial-gradient(circle at 50% 50%, rgba(244, 180, 0, 0.03) 0%, transparent 70%)",
+              "radial-gradient(circle at 50% 50%, rgba(232, 180, 188, 0.05) 0%, transparent 70%)",
             pointerEvents: "none",
+          },
+        },
+      },
+    },
+    MuiTextField: {
+      styleOverrides: {
+        root: {
+          "& .MuiOutlinedInput-root": {
+            borderRadius: 0,
+            transition: "all 0.3s ease-in-out",
+            "&:hover": {
+              "& .MuiOutlinedInput-notchedOutline": {
+                borderColor: "rgba(232, 180, 188, 0.5)",
+              },
+            },
+            "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+              borderColor: "rgba(232, 180, 188, 0.8)",
+              borderWidth: "1px",
+            },
           },
         },
       },

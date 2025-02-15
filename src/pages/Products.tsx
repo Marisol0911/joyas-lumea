@@ -6,13 +6,17 @@ import {
   Box,
   Skeleton,
   Button,
-  Card,
   CardMedia,
   CardContent,
   CardActions,
   Grid as Grid2,
+  Chip,
+  Stack,
 } from "@mui/material";
 import { useCart } from "../context/CartContext";
+
+// Categories for filtering
+const categories = ["ARETES", "COLLARES", "PULSERAS", "ANILLOS"];
 
 // Mock data for products
 const products = [
@@ -21,48 +25,49 @@ const products = [
     name: "Collar de Diamantes",
     price: "COP 4.500.000",
     image: "/images/diamond-necklace.jpg",
-    category: "Collares",
+    category: "COLLARES",
   },
   {
     id: 2,
     name: "Anillo de Oro",
     price: "COP 2.800.000",
     image: "/images/gold-ring.jpg",
-    category: "Anillos",
+    category: "ANILLOS",
   },
   {
     id: 3,
     name: "Aretes de Perlas",
     price: "COP 1.200.000",
     image: "/images/pearl-earrings.jpg",
-    category: "Aretes",
+    category: "ARETES",
   },
   {
     id: 4,
     name: "Pulsera de Plata",
     price: "COP 850.000",
     image: "/images/silver-bracelet.jpg",
-    category: "Pulseras",
+    category: "PULSERAS",
   },
   {
     id: 5,
     name: "Anillo de Zafiro",
     price: "COP 3.200.000",
     image: "/images/sapphire-ring.jpg",
-    category: "Anillos",
+    category: "ANILLOS",
   },
   {
     id: 6,
     name: "Pulsera de Oro",
     price: "COP 1.800.000",
     image: "/images/gold-bracelet.jpg",
-    category: "Pulseras",
+    category: "PULSERAS",
   },
   // Add more products as needed
 ];
 
 const Products: React.FC = () => {
   const [loading, setLoading] = useState<{ [key: number]: boolean }>({});
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const { addItem } = useCart();
 
   const handleImageLoad = (productId: number) => {
@@ -81,6 +86,20 @@ const Products: React.FC = () => {
       category: product.category,
     });
   };
+
+  const handleCategoryToggle = (category: string) => {
+    setSelectedCategories((prev) =>
+      prev.includes(category)
+        ? prev.filter((c) => c !== category)
+        : [...prev, category]
+    );
+  };
+
+  const filteredProducts = products.filter(
+    (product) =>
+      selectedCategories.length === 0 ||
+      selectedCategories.includes(product.category)
+  );
 
   return (
     <Box
@@ -112,8 +131,50 @@ const Products: React.FC = () => {
         >
           Nuestra Colección
         </Typography>
+
+        {/* Filter Section */}
+        <Box sx={{ mb: 6 }}>
+          <Typography
+            variant="h6"
+            sx={{
+              mb: 2,
+              textAlign: "center",
+              fontFamily: "Playfair Display",
+            }}
+          >
+            Filtrar por Categoría
+          </Typography>
+          <Stack
+            direction="row"
+            spacing={2}
+            justifyContent="center"
+            flexWrap="wrap"
+            useFlexGap
+            sx={{ gap: 2 }}
+          >
+            {categories.map((category) => (
+              <Chip
+                key={category}
+                label={category}
+                onClick={() => handleCategoryToggle(category)}
+                color={
+                  selectedCategories.includes(category) ? "primary" : "default"
+                }
+                sx={{
+                  borderRadius: "16px",
+                  transition: "all 0.3s ease",
+                  "&:hover": {
+                    transform: "translateY(-2px)",
+                  },
+                }}
+              />
+            ))}
+          </Stack>
+        </Box>
+
+        {/* Products Grid */}
         <Grid2 container spacing={4}>
-          {products.map((product) => (
+          {filteredProducts.map((product) => (
             <Grid2 key={product.id} xs={12} sm={6} md={4}>
               <Paper
                 elevation={0}

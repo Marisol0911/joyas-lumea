@@ -11,11 +11,16 @@ import {
 import { Link as RouterLink } from "react-router-dom";
 import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
 import { useCart } from "../context/CartContext";
-import SearchBar from "./SearchBar";
 import Cart from "./Cart";
+import SearchBar from "./SearchBar";
 
 const Navbar: React.FC = () => {
   const { toggleCart, totalItems } = useCart();
+
+  const handleSearch = (searchTerm: string) => {
+    // Aquí puedes implementar la lógica de búsqueda
+    console.log("Buscando:", searchTerm);
+  };
 
   return (
     <>
@@ -33,25 +38,48 @@ const Navbar: React.FC = () => {
             >
               <Box
                 component="img"
-                src="/images/logo.png"
+                src="/images/logo.svg"
                 alt="LUMÉA Jewelry"
                 sx={{
-                  height: "40px",
+                  height: { xs: "50px", sm: "60px", md: "70px" },
                   width: "auto",
+                  transition: "all 0.3s ease-in-out",
+                  "&:hover": {
+                    transform: "scale(1.02)",
+                    filter: "brightness(1.03)",
+                  },
+                  objectFit: "contain",
+                  my: { xs: 1, md: 1.5 },
+                  mx: { xs: 1, md: 2 },
+                  display: "block",
+                  maxWidth: "200px",
                 }}
               />
             </RouterLink>
 
             {/* Search Bar */}
-            <SearchBar />
+            <Box sx={{ flex: 1, mx: { xs: 2, md: 4 }, maxWidth: "500px" }}>
+              <SearchBar onSearch={handleSearch} />
+            </Box>
 
             {/* Navigation Links */}
-            <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                gap: { xs: 1, md: 2 },
+              }}
+            >
               <Button
                 component={RouterLink}
                 to="/"
                 color="inherit"
-                sx={{ display: { xs: "none", md: "block" } }}
+                sx={{
+                  display: { xs: "none", md: "block" },
+                  "&:hover": {
+                    color: "secondary.main",
+                  },
+                }}
               >
                 Inicio
               </Button>
@@ -59,7 +87,12 @@ const Navbar: React.FC = () => {
                 component={RouterLink}
                 to="/products"
                 color="inherit"
-                sx={{ display: { xs: "none", md: "block" } }}
+                sx={{
+                  display: { xs: "none", md: "block" },
+                  "&:hover": {
+                    color: "secondary.main",
+                  },
+                }}
               >
                 Productos
               </Button>
@@ -68,9 +101,9 @@ const Navbar: React.FC = () => {
                 component={RouterLink}
                 to="/about"
                 sx={{
-                  mx: 1,
+                  display: { xs: "none", sm: "block" },
                   "&:hover": {
-                    color: "primary.main",
+                    color: "secondary.main",
                   },
                 }}
               >
@@ -81,9 +114,9 @@ const Navbar: React.FC = () => {
                 component={RouterLink}
                 to="/contact"
                 sx={{
-                  mx: 1,
+                  display: { xs: "none", sm: "block" },
                   "&:hover": {
-                    color: "primary.main",
+                    color: "secondary.main",
                   },
                 }}
               >
@@ -95,7 +128,7 @@ const Navbar: React.FC = () => {
                 sx={{
                   position: "relative",
                   "&:hover": {
-                    backgroundColor: "rgba(255, 255, 255, 0.1)",
+                    backgroundColor: "rgba(232, 180, 188, 0.1)",
                   },
                 }}
               >
@@ -106,7 +139,7 @@ const Navbar: React.FC = () => {
                       position: "absolute",
                       top: -8,
                       right: -8,
-                      backgroundColor: "primary.main",
+                      backgroundColor: "secondary.main",
                       borderRadius: "50%",
                       width: 20,
                       height: 20,
@@ -114,6 +147,7 @@ const Navbar: React.FC = () => {
                       alignItems: "center",
                       justifyContent: "center",
                       fontSize: "0.75rem",
+                      color: "white",
                     }}
                   >
                     {totalItems}

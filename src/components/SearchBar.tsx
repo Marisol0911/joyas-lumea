@@ -1,267 +1,186 @@
 import React, { useState } from "react";
 import {
   Box,
-  TextField,
+  InputBase,
   IconButton,
-  Menu,
-  MenuItem,
+  Paper,
+  Popper,
+  Fade,
   Typography,
-  Autocomplete,
+  List,
+  ListItem,
+  ListItemText,
+  Divider,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import { useNavigate } from "react-router-dom";
 
-// Define categories and subcategories with IDs for better handling
-const categories = [
-  {
-    id: "anillos",
-    name: "Anillos",
-    subcategories: [],
-  },
-  {
-    id: "aretes",
-    name: "Aretes",
-    subcategories: [
-      { id: "earcuff", name: "Earcuff" },
-      { id: "candongas", name: "Candongas" },
-      { id: "topos", name: "Topos" },
-      { id: "huggies", name: "Huggies" },
-      { id: "maxiaretes", name: "Maxiaretes" },
-    ],
-  },
-  {
-    id: "collares",
-    name: "Collares",
-    subcategories: [
-      { id: "cadenas", name: "Cadenas" },
-      { id: "chockers", name: "Chockers" },
-      { id: "juegos", name: "Juegos" },
-      { id: "gargantillas", name: "Gargantillas" },
-      { id: "body-chain", name: "Body chain" },
-    ],
-  },
-  {
-    id: "pulseras",
-    name: "Pulseras",
-    subcategories: [
-      { id: "brazaletes", name: "Brazaletes" },
-      { id: "tejidos", name: "Tejidos" },
-    ],
-  },
-  {
-    id: "complementos",
-    name: "Complementos",
-    subcategories: [
-      { id: "porta-gafas", name: "Porta gafas" },
-      { id: "tobilleras", name: "Tobilleras" },
-      { id: "joyeros", name: "Joyeros" },
-      { id: "hair-clips", name: "Hair Clips" },
-      { id: "pony-cuff", name: "Pony Cuff" },
-    ],
-  },
+interface SearchBarProps {
+  onSearch: (searchTerm: string) => void;
+}
+
+const recentSearches = [
+  "Anillos de compromiso",
+  "Collares de diamantes",
+  "Aretes de perla",
+  "Pulseras de oro",
 ];
 
-// Generate search options for autocomplete
-const searchOptions = categories.reduce(
-  (
-    options: Array<{ id: string; name: string; category: string }>,
-    category
-  ) => {
-    // Add main category
-    options.push({
-      id: category.id,
-      name: category.name,
-      category: category.name,
-    });
-
-    // Add subcategories
-    category.subcategories.forEach((sub) => {
-      options.push({ id: sub.id, name: sub.name, category: category.name });
-    });
-
-    return options;
-  },
-  []
-);
-
-const SearchBar: React.FC = () => {
-  const navigate = useNavigate();
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [selectedOption, setSelectedOption] = useState<{
-    id: string;
-    name: string;
-    category: string;
-  } | null>(null);
+const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
   const [searchTerm, setSearchTerm] = useState("");
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [isInputFocused, setIsInputFocused] = useState(false);
 
-  // Handle category menu
-  const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleMenuClose = () => {
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    onSearch(searchTerm);
     setAnchorEl(null);
   };
 
-  // Handle search
-  const handleSearch = () => {
-    if (selectedOption) {
-      // Navigate to products page with search params
-      navigate(
-        `/products?category=${selectedOption.category.toLowerCase()}&subcategory=${
-          selectedOption.id
-        }`
-      );
-    } else if (searchTerm) {
-      // Navigate with search term
-      navigate(`/products?search=${encodeURIComponent(searchTerm)}`);
-    }
-    handleMenuClose();
+  const handleFocus = (event: React.FocusEvent<HTMLInputElement>) => {
+    setIsInputFocused(true);
+    setAnchorEl(event.currentTarget);
   };
 
-  // Handle selection from autocomplete
-  const handleOptionSelect = (
-    option: { id: string; name: string; category: string } | null
-  ) => {
-    setSelectedOption(option);
-    if (option) {
-      setSearchTerm(option.name);
-      handleSearch();
-    }
+  const handleBlur = () => {
+    // Pequeño delay para permitir que se detecte el clic en las sugerencias
+    setTimeout(() => {
+      setIsInputFocused(false);
+    }, 200);
   };
+
+  const handleSuggestionClick = (suggestion: string) => {
+    setSearchTerm(suggestion);
+    onSearch(suggestion);
+    setAnchorEl(null);
+  };
+
+  const open = Boolean(anchorEl) && isInputFocused;
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        alignItems: "center",
-        backgroundColor: "transparent",
-        borderRadius: "4px",
-        padding: "0 8px",
-        width: { xs: "100%", sm: "300px" },
-        margin: "0 16px",
-      }}
-    >
-      <Autocomplete
-        freeSolo
-        options={searchOptions}
-        getOptionLabel={(option) =>
-          typeof option === "string" ? option : option.name
-        }
-        inputValue={searchTerm}
-        onChange={(event, newValue) => {
-          handleOptionSelect(newValue as any);
-        }}
-        onInputChange={(event, newValue) => {
-          setSearchTerm(newValue);
-        }}
-        size="small"
-        renderOption={(props, option) => (
-          <MenuItem {...props}>
-            <Typography
-              variant="body2"
-              color="text.secondary"
-              sx={{ fontSize: "0.8rem" }}
-            >
-              {option.category} {">"}
-            </Typography>
-            <Typography sx={{ ml: 1 }}>{option.name}</Typography>
-          </MenuItem>
-        )}
-        renderInput={(params) => (
-          <TextField
-            {...params}
-            variant="outlined"
-            placeholder="Buscar productos..."
-            fullWidth
-            sx={{
-              "& .MuiOutlinedInput-root": {
-                backgroundColor: "rgba(255, 255, 255, 0.1)",
-                borderRadius: "4px",
-                color: "inherit",
-                transition: "background-color 0.3s",
-                "&:hover": {
-                  backgroundColor: "rgba(255, 255, 255, 0.2)",
-                },
-                "& fieldset": {
-                  borderColor: "rgba(255, 255, 255, 0.3)",
-                },
-                "&:hover fieldset": {
-                  borderColor: "rgba(255, 255, 255, 0.5)",
-                },
-                "&.Mui-focused fieldset": {
-                  borderColor: "primary.main",
-                },
-              },
-              "& .MuiInputBase-input::placeholder": {
-                color: "rgba(255, 255, 255, 0.7)",
-              },
-            }}
-          />
-        )}
-      />
-      <IconButton
-        onClick={handleSearch}
+    <Box sx={{ position: "relative", width: "100%" }}>
+      <Paper
+        component="form"
+        onSubmit={handleSubmit}
+        elevation={0}
         sx={{
-          color: "inherit",
+          display: "flex",
+          alignItems: "center",
+          height: "44px",
+          px: 2,
+          backgroundColor: "transparent",
+          border: "1px solid",
+          borderColor: open ? "secondary.main" : "rgba(232, 180, 188, 0.3)",
+          transition: "all 0.3s ease-in-out",
           "&:hover": {
-            backgroundColor: "rgba(255, 255, 255, 0.1)",
+            borderColor: "secondary.light",
+            backgroundColor: "rgba(232, 180, 188, 0.03)",
           },
         }}
       >
-        <SearchIcon />
-      </IconButton>
-      <Menu
+        <InputBase
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+          placeholder="Buscar joyas..."
+          sx={{
+            ml: 1,
+            flex: 1,
+            fontFamily: "'Cormorant Garamond', serif",
+            fontSize: "1.1rem",
+            letterSpacing: "0.05em",
+            color: "text.primary",
+            "& input::placeholder": {
+              color: "text.secondary",
+              opacity: 0.7,
+              fontStyle: "italic",
+            },
+          }}
+        />
+        <IconButton
+          type="submit"
+          sx={{
+            color: open ? "secondary.main" : "text.secondary",
+            p: "6px",
+            transition: "all 0.3s ease-in-out",
+            "&:hover": {
+              color: "secondary.main",
+              backgroundColor: "transparent",
+            },
+          }}
+        >
+          <SearchIcon />
+        </IconButton>
+      </Paper>
+
+      <Popper
+        open={open}
         anchorEl={anchorEl}
-        open={Boolean(anchorEl)}
-        onClose={handleMenuClose}
-        PaperProps={{
-          sx: {
-            mt: 1,
-            maxHeight: "400px",
-          },
-        }}
+        placement="bottom-start"
+        transition
+        style={{ width: anchorEl?.clientWidth, zIndex: 1300 }}
       >
-        {categories.map((category) => (
-          <MenuItem
-            key={category.id}
-            onClick={() => {
-              handleOptionSelect({
-                id: category.id,
-                name: category.name,
-                category: category.name,
-              });
-            }}
-            sx={{
-              flexDirection: "column",
-              alignItems: "flex-start",
-            }}
-          >
-            <Typography variant="body1" sx={{ fontWeight: "bold" }}>
-              {category.name}
-            </Typography>
-            {category.subcategories.length > 0 && (
-              <Box sx={{ pl: 2, width: "100%" }}>
-                {category.subcategories.map((sub) => (
-                  <MenuItem
-                    key={sub.id}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleOptionSelect({
-                        id: sub.id,
-                        name: sub.name,
-                        category: category.name,
-                      });
-                    }}
-                  >
-                    {sub.name}
-                  </MenuItem>
-                ))}
+        {({ TransitionProps }) => (
+          <Fade {...TransitionProps} timeout={350}>
+            <Paper
+              elevation={0}
+              sx={{
+                mt: 1,
+                border: "1px solid",
+                borderColor: "rgba(232, 180, 188, 0.2)",
+                backgroundColor: "background.paper",
+                backdropFilter: "blur(8px)",
+              }}
+            >
+              <Box sx={{ p: 2 }}>
+                <Typography
+                  variant="overline"
+                  sx={{
+                    color: "text.secondary",
+                    letterSpacing: "0.1em",
+                    fontSize: "0.75rem",
+                  }}
+                >
+                  Búsquedas recientes
+                </Typography>
+                <List sx={{ pt: 1 }}>
+                  {recentSearches.map((search, index) => (
+                    <React.Fragment key={search}>
+                      <ListItem
+                        button
+                        onClick={() => handleSuggestionClick(search)}
+                        sx={{
+                          py: 1,
+                          "&:hover": {
+                            backgroundColor: "rgba(232, 180, 188, 0.05)",
+                          },
+                        }}
+                      >
+                        <ListItemText
+                          primary={search}
+                          sx={{
+                            "& .MuiListItemText-primary": {
+                              fontFamily: "'Cormorant Garamond', serif",
+                              fontSize: "1rem",
+                              letterSpacing: "0.05em",
+                              color: "text.primary",
+                            },
+                          }}
+                        />
+                      </ListItem>
+                      {index < recentSearches.length - 1 && (
+                        <Divider
+                          sx={{ borderColor: "rgba(232, 180, 188, 0.1)" }}
+                        />
+                      )}
+                    </React.Fragment>
+                  ))}
+                </List>
               </Box>
-            )}
-          </MenuItem>
-        ))}
-      </Menu>
+            </Paper>
+          </Fade>
+        )}
+      </Popper>
     </Box>
   );
 };
