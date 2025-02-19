@@ -18,26 +18,25 @@ import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import { useCart } from "../context/CartContext";
 import { useNavigate } from "react-router-dom";
-import { useStyles } from "../styles/Cart.styles";
 
 const Cart: React.FC = () => {
-  const classes = useStyles();
-  const { items, isOpen, toggleCart, removeItem, updateQuantity, totalItems } =
-    useCart();
+  const {
+    cart,
+    isOpen,
+    toggleCart,
+    removeFromCart,
+    updateQuantity,
+    totalItems,
+    total,
+  } = useCart();
   const navigate = useNavigate();
-
-  const totalPrice = items.reduce(
-    (sum, item) =>
-      sum + parseInt(item.price.replace(/[^0-9]/g, "")) * item.quantity,
-    0
-  );
 
   const handleCheckout = () => {
     toggleCart();
     navigate("/checkout");
   };
 
-  const formattedTotal = `COP ${totalPrice.toLocaleString("es-CO")}`;
+  const formattedTotal = `COP ${total.toLocaleString("es-CO")}`;
 
   return (
     <Drawer
@@ -45,45 +44,80 @@ const Cart: React.FC = () => {
       open={isOpen}
       onClose={toggleCart}
       PaperProps={{
-        className: classes.drawer,
+        sx: {
+          width: { xs: "100%", sm: 400 },
+          backgroundColor: "background.paper",
+        },
       }}
     >
-      <Box className={classes.container}>
-        <Box className={classes.header}>
-          <Typography variant="h6" className={classes.title}>
+      <Box
+        sx={{ p: 2, height: "100%", display: "flex", flexDirection: "column" }}
+      >
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            mb: 2,
+          }}
+        >
+          <Typography variant="h6">
             Carrito de Compras ({totalItems})
           </Typography>
           <IconButton onClick={toggleCart} color="primary">
             <CloseIcon />
           </IconButton>
         </Box>
-        <Divider className={classes.divider} />
+        <Divider sx={{ mb: 2 }} />
 
-        {items.length === 0 ? (
-          <Box className={classes.emptyCart}>
-            <Typography variant="body1">Tu carrito está vacío</Typography>
+        {cart.length === 0 ? (
+          <Box
+            sx={{
+              flex: 1,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Typography variant="body1" sx={{ mb: 2 }}>
+              Tu carrito está vacío
+            </Typography>
             <Button
               variant="outlined"
               color="primary"
               onClick={toggleCart}
-              className={classes.continueButton}
+              sx={{ minWidth: 200 }}
             >
               Continuar Comprando
             </Button>
           </Box>
         ) : (
           <>
-            <List className={classes.itemsList}>
-              {items.map((item) => (
-                <ListItem key={item.id} className={classes.listItem}>
+            <List sx={{ flex: 1, overflow: "auto" }}>
+              {cart.map((item) => (
+                <ListItem
+                  key={item.id}
+                  sx={{
+                    mb: 2,
+                    bgcolor: "background.default",
+                    borderRadius: 1,
+                    boxShadow: "0 2px 4px rgba(0,0,0,0.05)",
+                  }}
+                >
                   <ListItemAvatar>
-                    <Avatar variant="square" src={item.image} />
+                    <Avatar
+                      variant="rounded"
+                      src={item.image}
+                      sx={{ width: 60, height: 60 }}
+                    />
                   </ListItemAvatar>
                   <ListItemText
                     primary={item.name}
-                    secondary={`Cantidad: ${item.quantity}`}
+                    secondary={`COP ${item.price.toLocaleString("es-CO")}`}
+                    sx={{ mx: 2 }}
                   />
-                  <Box>
+                  <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
                     <IconButton
                       size="small"
                       onClick={() => updateQuantity(item.id, item.quantity - 1)}
@@ -91,9 +125,7 @@ const Cart: React.FC = () => {
                     >
                       <RemoveIcon />
                     </IconButton>
-                    <Typography component="span" sx={{ mx: 1 }}>
-                      {item.quantity}
-                    </Typography>
+                    <Typography component="span">{item.quantity}</Typography>
                     <IconButton
                       size="small"
                       onClick={() => updateQuantity(item.id, item.quantity + 1)}
@@ -102,7 +134,7 @@ const Cart: React.FC = () => {
                     </IconButton>
                     <IconButton
                       size="small"
-                      onClick={() => removeItem(item.id)}
+                      onClick={() => removeFromCart(item.id)}
                       color="error"
                     >
                       <DeleteOutlineIcon />
@@ -112,8 +144,15 @@ const Cart: React.FC = () => {
               ))}
             </List>
 
-            <Box className={classes.totalSection}>
-              <Box className={classes.totalRow}>
+            <Box sx={{ mt: 2, pt: 2, borderTop: 1, borderColor: "divider" }}>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  mb: 2,
+                }}
+              >
                 <Typography variant="h6">Total:</Typography>
                 <Typography variant="h6" color="primary">
                   {formattedTotal}
@@ -125,7 +164,12 @@ const Cart: React.FC = () => {
                 color="primary"
                 size="large"
                 onClick={handleCheckout}
-                className={classes.checkoutButton}
+                sx={{
+                  py: 1.5,
+                  "&:hover": {
+                    transform: "translateY(-2px)",
+                  },
+                }}
               >
                 Proceder al Pago
               </Button>

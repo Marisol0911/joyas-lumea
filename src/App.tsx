@@ -8,6 +8,8 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Checkout from "./pages/Checkout";
 import CheckoutSuccess from "./pages/CheckoutSuccess";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 import { CartProvider } from "./context/CartContext";
 import WhatsAppButton from "./components/WhatsAppButton";
 
@@ -199,6 +201,8 @@ function App() {
             <Route path="/contact" element={<Contact />} />
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/checkout/success" element={<CheckoutSuccess />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
           </Routes>
           <WhatsAppButton />
         </Router>

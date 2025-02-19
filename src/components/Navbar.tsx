@@ -8,7 +8,7 @@ import {
   Container,
   IconButton,
 } from "@mui/material";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
 import { useCart } from "../context/CartContext";
 import Cart from "./Cart";
@@ -16,6 +16,7 @@ import SearchBar from "./SearchBar";
 
 const Navbar: React.FC = () => {
   const { toggleCart, totalItems } = useCart();
+  const navigate = useNavigate();
 
   const handleSearch = (searchTerm: string) => {
     // Aquí puedes implementar la lógica de búsqueda
@@ -122,6 +123,38 @@ const Navbar: React.FC = () => {
               >
                 Contacto
               </Button>
+
+              {/* Botones de Autenticación */}
+              <Box sx={{ display: "flex", gap: 1 }}>
+                <Button
+                  component={RouterLink}
+                  to="/login"
+                  color="inherit"
+                  sx={{
+                    "&:hover": {
+                      color: "secondary.main",
+                    },
+                  }}
+                >
+                  Iniciar Sesión
+                </Button>
+                <Button
+                  component={RouterLink}
+                  to="/register"
+                  variant="outlined"
+                  color="secondary"
+                  sx={{
+                    borderWidth: "1px",
+                    "&:hover": {
+                      borderWidth: "1px",
+                      transform: "translateY(-2px)",
+                    },
+                  }}
+                >
+                  Crear Cuenta
+                </Button>
+              </Box>
+
               <IconButton
                 color="inherit"
                 onClick={toggleCart}

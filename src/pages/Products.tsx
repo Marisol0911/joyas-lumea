@@ -68,7 +68,7 @@ const products = [
 const Products: React.FC = () => {
   const [loading, setLoading] = useState<{ [key: number]: boolean }>({});
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
-  const { addItem } = useCart();
+  const { addToCart } = useCart();
 
   const handleImageLoad = (productId: number) => {
     setLoading((prev) => ({
@@ -78,7 +78,7 @@ const Products: React.FC = () => {
   };
 
   const handleAddToCart = (product: any) => {
-    addItem({
+    addToCart({
       id: product.id,
       name: product.name,
       price: product.price,
@@ -113,7 +113,7 @@ const Products: React.FC = () => {
           variant="h2"
           component="h1"
           sx={{
-            mb: 8,
+            mb: 4,
             textAlign: "center",
             fontFamily: "Playfair Display",
             position: "relative",
@@ -131,6 +131,143 @@ const Products: React.FC = () => {
         >
           Nuestra Colección
         </Typography>
+
+        {/* Offer Banner */}
+        <Box
+          sx={{
+            width: "100%",
+            display: "flex",
+            justifyContent: "center",
+            mb: 8,
+            mt: 6,
+          }}
+        >
+          <Paper
+            elevation={3}
+            sx={{
+              py: 4,
+              px: { xs: 3, md: 6 },
+              width: "100%",
+              maxWidth: "800px",
+              mx: 2,
+              textAlign: "center",
+              background: "linear-gradient(135deg, #B8860B 0%, #D4AF37 100%)",
+              color: "white",
+              borderRadius: 2,
+              position: "relative",
+              overflow: "hidden",
+              boxShadow: "0 4px 20px rgba(184, 134, 11, 0.2)",
+              animation: "pulse 2s infinite",
+              "@keyframes pulse": {
+                "0%": {
+                  transform: "scale(1)",
+                  boxShadow: "0 4px 20px rgba(184, 134, 11, 0.2)",
+                },
+                "50%": {
+                  transform: "scale(1.02)",
+                  boxShadow: "0 4px 30px rgba(184, 134, 11, 0.4)",
+                },
+                "100%": {
+                  transform: "scale(1)",
+                  boxShadow: "0 4px 20px rgba(184, 134, 11, 0.2)",
+                },
+              },
+              "&::before": {
+                content: '""',
+                position: "absolute",
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                background:
+                  "radial-gradient(circle at center, rgba(255,255,255,0.3) 0%, transparent 70%)",
+                animation: "shine 3s infinite",
+              },
+              "&::after": {
+                content: '""',
+                position: "absolute",
+                top: "-50%",
+                left: "-50%",
+                right: "-50%",
+                bottom: "-50%",
+                background:
+                  "linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent)",
+                transform: "rotate(45deg)",
+                animation: "shine 3s infinite",
+              },
+              "@keyframes shine": {
+                "0%": {
+                  opacity: 0.5,
+                },
+                "50%": {
+                  opacity: 1,
+                },
+                "100%": {
+                  opacity: 0.5,
+                },
+              },
+            }}
+          >
+            <Typography
+              variant="h4"
+              sx={{
+                fontFamily: "Playfair Display",
+                fontWeight: 500,
+                letterSpacing: "0.1em",
+                mb: 2,
+                textShadow: "2px 2px 4px rgba(0,0,0,0.2)",
+                fontSize: { xs: "1.5rem", sm: "2rem", md: "2.5rem" },
+              }}
+            >
+              ¡OFERTA ESPECIAL!
+            </Typography>
+            <Typography
+              variant="h3"
+              sx={{
+                fontFamily: "Playfair Display",
+                fontWeight: 700,
+                letterSpacing: "0.15em",
+                mb: 3,
+                textShadow: "2px 2px 4px rgba(0,0,0,0.2)",
+                fontSize: { xs: "2rem", sm: "2.5rem", md: "3rem" },
+              }}
+            >
+              20% DE DESCUENTO
+            </Typography>
+            <Typography
+              variant="h6"
+              sx={{
+                fontFamily: "Cormorant Garamond",
+                letterSpacing: "0.1em",
+                opacity: 0.9,
+                fontWeight: 400,
+                fontSize: { xs: "1rem", sm: "1.25rem" },
+              }}
+            >
+              En toda nuestra colección de joyas
+            </Typography>
+            <Button
+              variant="outlined"
+              sx={{
+                mt: 3,
+                color: "white",
+                borderColor: "white",
+                borderWidth: 2,
+                px: 4,
+                py: 1,
+                "&:hover": {
+                  borderWidth: 2,
+                  borderColor: "white",
+                  backgroundColor: "rgba(255,255,255,0.1)",
+                  transform: "translateY(-2px)",
+                },
+                transition: "all 0.3s ease",
+              }}
+            >
+              Ver Ofertas
+            </Button>
+          </Paper>
+        </Box>
 
         {/* Filter Section */}
         <Box sx={{ mb: 6 }}>

@@ -7,9 +7,20 @@ import {
   Grid,
   Paper,
   Divider,
+  IconButton,
+  SvgIcon,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import InstagramIcon from "@mui/icons-material/Instagram";
+import YouTubeIcon from "@mui/icons-material/YouTube";
 import Banner from "../components/Banner";
+
+// Ícono personalizado para TikTok
+const TikTokIcon = (props: any) => (
+  <SvgIcon {...props} viewBox="0 0 24 24">
+    <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-5.2 1.74 2.89 2.89 0 012.31-4.64c.298-.002.595.042.88.13V9.4a6.33 6.33 0 00-1-.08A6.34 6.34 0 003 15.66a6.34 6.34 0 0010.86 4.44l.13-.19v-8.8a8.16 8.16 0 005.69 2.23l.01-3.62c-.01-.04-.09-.08-.1-.08" />
+  </SvgIcon>
+);
 
 const Home: React.FC = () => {
   const navigate = useNavigate();
@@ -274,21 +285,197 @@ const Home: React.FC = () => {
                 Contacto
               </Typography>
               <Typography variant="body2" sx={{ mb: 1 }}>
-                Email: info@joyerialumea.com
+                Email: joyeriainventario1@gmail.com
               </Typography>
               <Typography variant="body2" sx={{ mb: 1 }}>
-                Tel: +123 456 789
+                Tel: +57 310 8492912
+              </Typography>
+              <Typography variant="body2" sx={{ mb: 1 }}>
+                Dirección: Carrera 14 #12-30
+              </Typography>
+              <Typography variant="body2" sx={{ mb: 1 }}>
+                Centro, Armenia, Quindío
               </Typography>
             </Grid>
             <Grid item xs={12} md={4}>
-              <Typography variant="h6" sx={{ mb: 3, letterSpacing: "0.1em" }}>
-                Síguenos
-              </Typography>
-              <Box sx={{ display: "flex", gap: 2 }}>
-                {/* Aquí puedes agregar los íconos de redes sociales */}
+              <Box sx={{ display: "flex", alignItems: "center", mb: 3 }}>
+                <Typography variant="h6" sx={{ letterSpacing: "0.1em", mr: 2 }}>
+                  Síguenos
+                </Typography>
+                <Box sx={{ display: "flex", gap: 2 }}>
+                  <IconButton
+                    href="https://www.instagram.com/joyeria_lumea?igsh=MWVkcGYwOWhrcmFpdw=="
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    sx={{
+                      color: "secondary.main",
+                      transition: "all 0.3s ease-in-out",
+                      "&:hover": {
+                        color: "primary.main",
+                        transform: "translateY(-2px)",
+                      },
+                    }}
+                  >
+                    <InstagramIcon sx={{ fontSize: 28 }} />
+                  </IconButton>
+                  <IconButton
+                    href="https://www.tiktok.com/@joyeria.luma?_t=ZS-8u3SAG320pO&_r=1"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    sx={{
+                      color: "secondary.main",
+                      transition: "all 0.3s ease-in-out",
+                      "&:hover": {
+                        color: "primary.main",
+                        transform: "translateY(-2px)",
+                      },
+                    }}
+                  >
+                    <TikTokIcon sx={{ fontSize: 28 }} />
+                  </IconButton>
+                  <IconButton
+                    href="https://www.youtube.com/@InventarioJoyeria"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    sx={{
+                      color: "secondary.main",
+                      transition: "all 0.3s ease-in-out",
+                      "&:hover": {
+                        color: "primary.main",
+                        transform: "translateY(-2px)",
+                      },
+                    }}
+                  >
+                    <YouTubeIcon sx={{ fontSize: 28 }} />
+                  </IconButton>
+                </Box>
               </Box>
             </Grid>
           </Grid>
+
+          {/* Payment Methods Section */}
+          <Box sx={{ mt: 6, mb: 4 }}>
+            <Typography
+              variant="h6"
+              align="center"
+              sx={{ mb: 3, letterSpacing: "0.1em" }}
+            >
+              Medios de Pago
+            </Typography>
+            <Box
+              sx={{
+                display: "flex",
+                flexWrap: "wrap",
+                justifyContent: "center",
+                gap: 3,
+                px: 2,
+              }}
+            >
+              {/* Mercado Pago */}
+              <Box
+                component="img"
+                src="/images/payment/mercadopago.png"
+                alt="Mercado Pago"
+                sx={{
+                  height: 40,
+                  filter: "grayscale(100%)",
+                  opacity: 0.7,
+                  transition: "all 0.3s ease",
+                  "&:hover": {
+                    filter: "grayscale(0%)",
+                    opacity: 1,
+                    transform: "translateY(-2px)",
+                  },
+                }}
+              />
+              {/* PSE */}
+              <Box
+                component="img"
+                src="/images/payment/pse.png"
+                alt="PSE"
+                sx={{
+                  height: 40,
+                  filter: "grayscale(100%)",
+                  opacity: 0.7,
+                  transition: "all 0.3s ease",
+                  "&:hover": {
+                    filter: "grayscale(0%)",
+                    opacity: 1,
+                    transform: "translateY(-2px)",
+                  },
+                }}
+              />
+              {/* Visa */}
+              <Box
+                component="img"
+                src="/images/payment/visa.png"
+                alt="Visa"
+                sx={{
+                  height: 40,
+                  filter: "grayscale(100%)",
+                  opacity: 0.7,
+                  transition: "all 0.3s ease",
+                  "&:hover": {
+                    filter: "grayscale(0%)",
+                    opacity: 1,
+                    transform: "translateY(-2px)",
+                  },
+                }}
+              />
+              {/* Mastercard */}
+              <Box
+                component="img"
+                src="/images/payment/mastercard.png"
+                alt="Mastercard"
+                sx={{
+                  height: 40,
+                  filter: "grayscale(100%)",
+                  opacity: 0.7,
+                  transition: "all 0.3s ease",
+                  "&:hover": {
+                    filter: "grayscale(0%)",
+                    opacity: 1,
+                    transform: "translateY(-2px)",
+                  },
+                }}
+              />
+              {/* Addi */}
+              <Box
+                component="img"
+                src="/images/payment/addi.png"
+                alt="Addi"
+                sx={{
+                  height: 40,
+                  filter: "grayscale(100%)",
+                  opacity: 0.7,
+                  transition: "all 0.3s ease",
+                  "&:hover": {
+                    filter: "grayscale(0%)",
+                    opacity: 1,
+                    transform: "translateY(-2px)",
+                  },
+                }}
+              />
+              {/* Sistecredito */}
+              <Box
+                component="img"
+                src="/images/payment/sistecredito.png"
+                alt="Sistecredito"
+                sx={{
+                  height: 40,
+                  filter: "grayscale(100%)",
+                  opacity: 0.7,
+                  transition: "all 0.3s ease",
+                  "&:hover": {
+                    filter: "grayscale(0%)",
+                    opacity: 1,
+                    transform: "translateY(-2px)",
+                  },
+                }}
+              />
+            </Box>
+          </Box>
+
           <Divider sx={{ my: 6 }} />
           <Typography
             variant="body2"

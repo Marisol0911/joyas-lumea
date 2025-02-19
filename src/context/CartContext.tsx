@@ -1,23 +1,24 @@
-import React, { createContext, useContext, useState, useCallback } from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
 
 interface CartItem {
-  id: number;
+  id: string | number;
   name: string;
-  price: string;
+  price: string | number;
   image: string;
   quantity: number;
-  category: string;
+  category?: string;
 }
 
 interface CartContextType {
-  items: CartItem[];
-  addItem: (product: Omit<CartItem, "quantity">) => void;
-  removeItem: (productId: number) => void;
-  updateQuantity: (productId: number, quantity: number) => void;
-  clearCart: () => void;
+  cart: CartItem[];
+  total: number;
+  totalItems: number;
   isOpen: boolean;
   toggleCart: () => void;
-  totalItems: number;
+  addToCart: (item: Omit<CartItem, "quantity">) => void;
+  removeFromCart: (itemId: string | number) => void;
+  clearCart: () => void;
+  updateQuantity: (itemId: string | number, quantity: number) => void;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -25,61 +26,75 @@ const CartContext = createContext<CartContextType | undefined>(undefined);
 export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [items, setItems] = useState<CartItem[]>([]);
+  const [cart, setCart] = useState<CartItem[]>([]);
+  const [total, setTotal] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
+  const [totalItems, setTotalItems] = useState(0);
 
-  const addItem = useCallback((product: Omit<CartItem, "quantity">) => {
-    setItems((currentItems) => {
-      const existingItem = currentItems.find((item) => item.id === product.id);
+  useEffect(() => {
+    // Calcular el total cada vez que el carrito cambie
+    const newTotal = cart.reduce((sum, item) => {
+      const price =
+        typeof item.price === "string"
+          ? parseInt(item.price.replace(/[^0-9]/g, ""))
+          : item.price;
+      return sum + price * item.quantity;
+    }, 0);
+    setTotal(newTotal);
+
+    // Calcular el total de items
+    const newTotalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+    setTotalItems(newTotalItems);
+  }, [cart]);
+
+  const toggleCart = () => {
+    setIsOpen((prev) => !prev);
+  };
+
+  const addToCart = (item: Omit<CartItem, "quantity">) => {
+    setCart((prevCart) => {
+      const existingItem = prevCart.find((i) => i.id === item.id);
       if (existingItem) {
-        return currentItems.map((item) =>
-          item.id === product.id
-            ? { ...item, quantity: item.quantity + 1 }
-            : item
+        return prevCart.map((i) =>
+          i.id === item.id ? { ...i, quantity: i.quantity + 1 } : i
         );
       }
-      return [...currentItems, { ...product, quantity: 1 }];
+      return [...prevCart, { ...item, quantity: 1 }];
     });
-    setIsOpen(true); // Open cart when adding items
-  }, []);
+    setIsOpen(true); // Abrir el carrito cuando se agrega un item
+  };
 
-  const removeItem = useCallback((productId: number) => {
-    setItems((currentItems) =>
-      currentItems.filter((item) => item.id !== productId)
+  const removeFromCart = (itemId: string | number) => {
+    setCart((prevCart) => prevCart.filter((item) => item.id !== itemId));
+  };
+
+  const updateQuantity = (itemId: string | number, quantity: number) => {
+    if (quantity < 1) {
+      removeFromCart(itemId);
+      return;
+    }
+    setCart((prevCart) =>
+      prevCart.map((item) =>
+        item.id === itemId ? { ...item, quantity } : item
+      )
     );
-  }, []);
+  };
 
-  const updateQuantity = useCallback((productId: number, quantity: number) => {
-    setItems((currentItems) =>
-      currentItems
-        .map((item) =>
-          item.id === productId
-            ? { ...item, quantity: Math.max(0, quantity) }
-            : item
-        )
-        .filter((item) => item.quantity > 0)
-    );
-  }, []);
-
-  const clearCart = useCallback(() => {
-    setItems([]);
-  }, []);
-
-  const toggleCart = useCallback(() => {
-    setIsOpen((prev) => !prev);
-  }, []);
-
-  const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
+  const clearCart = () => {
+    setCart([]);
+    setIsOpen(false);
+  };
 
   const value = {
-    items,
-    addItem,
-    removeItem,
-    updateQuantity,
-    clearCart,
+    cart,
+    total,
+    totalItems,
     isOpen,
     toggleCart,
-    totalItems,
+    addToCart,
+    removeFromCart,
+    clearCart,
+    updateQuantity,
   };
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
